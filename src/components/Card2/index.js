@@ -25,93 +25,29 @@ import {
 import moment from 'moment';
 import {useCallback} from 'react';
 import ModalDP from './ModalDP';
-
+import Days from './CalendarComponents/Days';
+import Month from './CalendarComponents/Month';
+import Year from './CalendarComponents/Year';
 // returns today's date.. e.g: 2019/10/12
 //Get formatted date from Date object or date string "2019/..."
 
-const Card2 = ({warehouse1 = false}) => {
+const Card2 = ({warehouse1 = false, value}) => {
   const ref = useRef();
   const calendar = useSelector(state => state.add);
   const dispatch = useDispatch();
+  const [date, setDate] = useState(value || new Date());
   const [isModalVisible, setModalVisible] = useState(false);
+
   const [calendarType, setCalendarType] = useState('date');
-  const weekdays = [' ВС ', ' ПН ', ' ВТ ', ' СР ', ' ЧТ ', ' ПТ ', ' СБ '];
-  const allMonth = ['jan', 'feb', 'march', 'april', 'may', 'june', 'july'];
-  const decadeYear = ['2018', '2019', '2020', '2021', '2022', '2023'];
-  const allDays = [
-    '1',
-    '1',
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    '10',
-    '11',
-    '12',
-    '13',
-    '14',
-    '15',
-    '16',
-    '17',
-    '18',
-    '19',
-    '20',
-    '21',
-    '22',
-    '23',
-    '24',
-    '25',
-    '26',
-    '27',
-    '28',
-    '29',
-    '30',
-  ];
-  // const [fromDate, setFromDate] = useState(fixFormat(new Date()));
-  // const [toDate, setToDate] = useState(fixFormat(new Date()));
-  // const [selectedDate, setSelectedDate] = useState('');
+
   const data = useSelector(state => state.add);
   const styles = style(data.size);
-  // const DP = useCallback(() => {
-  //   return (
-  //     <View style={{width: 316, height: 343}}>
-  //       <ModalDP
-  //         {...{
-  //           setModalVisible,
-  //           isModalVisible,
-  //           // styles,
-  //           // setSelectedDate,
-  //           // setFromDate,
-  //           // calendar,
-  //           // setToDate,
-  //           // selectedDate,
-  //           // dispatch,
-  //           // fromDate,
-  //           // toDate,
-  //         }}
-  //       />
-  //     </View>
-  //   );
-  // }, []);
-  // getFormatedDate(new Date(), 'YYYY/MM/DD h:m');
-  // getToday();
 
   useEffect(() => {
     if (compareDate(new Date(), calendar.date, 'greater')) {
       dispatch(setListDateAC(createListDate(calendar.date, true)));
     }
   }, [calendar.date]);
-
-  const setMonth = date => {
-    dispatch(setPrevMonthAC(getDateMonth(date, 'prev')));
-    dispatch(setCurrentMonthAC(getDateMonth(date, 'current')));
-    dispatch(setNextMonthAC(getDateMonth(date, 'next')));
-  };
 
   return (
     <View style={styles.container}>
@@ -143,128 +79,76 @@ const Card2 = ({warehouse1 = false}) => {
         onBackdropPress={() => setModalVisible(false)}>
         <View
           style={{
-            width: 360,
-            backgroundColor: 'white',
-            height: 410,
-            borderRadius: 10,
+            flexDirection: 'row',
+            marginBottom: 40,
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '100%',
           }}>
-          <View style={{flexDirection: 'row'}}>
-            <TouchableOpacity
-              onPress={() => setCalendarType('month')}
-              style={{margin: 20, backgroundColor: 'red'}}>
-              <Text style={styles.calendarText}>February</Text>
-            </TouchableOpacity>
-            <View
-              style={{
-                margin: 20,
-                marginLeft: 70,
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-                width: 120,
-              }}>
-              <TouchableOpacity onPress={() => setCalendarType('date')}>
-                <Text style={styles.calendarText}>L </Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => setCalendarType('year')}>
-                <Text style={styles.calendarText}>2021</Text>
-              </TouchableOpacity>
-              <View>
-                <Text style={styles.calendarText}>R </Text>
-              </View>
-            </View>
-          </View>
+          <TouchableOpacity
+            onPress={() => setCalendarType('month')}
+            style={{...styles.monthYearContainer, alignItems: 'center'}}>
+            <Text style={styles.monthYearText}>Месяц</Text>
+          </TouchableOpacity>
 
-          <View>
+          <TouchableOpacity
+            style={{...styles.monthYearContainer, alignItems: 'center'}}
+            onPress={() => setCalendarType('year')}>
+            <Text style={styles.monthYearText}>Год</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.datesBox}>
+          <View
+            style={{
+              width: 280,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
             {calendarType === 'date' ? (
-              <View>
-                <View style={{flexDirection: 'row', marginLeft: 18}}>
-                  {weekdays.map((item, index) => (
-                    <TouchableOpacity style={{width: 45}} key={index}>
-                      <Text
-                        style={{
-                          ...styles.calendarText,
-
-                          fontSize: 14,
-                          color: 'rgba(37, 52, 102, 0.5)',
-                        }}>
-                        {item}
-                      </Text>
-                    </TouchableOpacity>
-                  ))}
-                </View>
-                <View style={{flexDirection: 'column'}}>
-                  <View
-                    style={{
-                      margin: 20,
-                      flexDirection: 'row',
-                      flexWrap: 'wrap',
-                    }}>
-                    {calendar.prevMonth.list.map((item, index) => (
-                      <TouchableOpacity
-                        key={index}
-                        onPress={() => {
-                          setMonth(calendar.prevMonth.date);
-                        }}>
-                        <Text
-                          style={{
-                            ...styles.calendarText,
-                            fontSize: 14,
-                            color: 'rgba(37, 52, 102, 0.5)',
-                            width: 45,
-                            marginBottom: 30,
-                          }}>
-                          {item}
-                        </Text>
-                      </TouchableOpacity>
-                    ))}
-                    {calendar.currentMonth.list.map((item, index) => (
-                      <TouchableOpacity key={index}>
-                        <Text
-                          style={{
-                            ...styles.calendarText,
-                            fontSize: 14,
-                            color: 'black',
-                            width: 45,
-                            marginBottom: 30,
-                          }}>
-                          {item}
-                        </Text>
-                      </TouchableOpacity>
-                    ))}
-                    {calendar.nextMonth.list.map((item, index) => (
-                      <TouchableOpacity key={index}>
-                        <Text
-                          style={{
-                            ...styles.calendarText,
-                            fontSize: 14,
-                            color: 'rgba(37, 52, 102, 0.5)',
-                            width: 45,
-                            marginBottom: 30,
-                          }}>
-                          {item}
-                        </Text>
-                      </TouchableOpacity>
-                    ))}
-                  </View>
-                </View>
-              </View>
+              <Days
+                setCalendarType={setCalendarType}
+                date={date}
+                setDate={setDate}
+                styles={styles}
+              />
             ) : calendarType === 'month' ? (
-              allMonth.map((item, index) => (
-                <TouchableOpacity key={index}>
-                  <Text>{item}</Text>
-                </TouchableOpacity>
-              ))
+              <Month
+                setCalendarType={setCalendarType}
+                date={date}
+                setDate={setDate}
+                calendar={calendar}
+                styles={styles}
+              />
             ) : (
-              decadeYear.map((item, index) => (
-                <TouchableOpacity key={index}>
-                  <Text>{item}</Text>
-                </TouchableOpacity>
-              ))
+              <Year
+                setCalendarType={setCalendarType}
+                value={date}
+                setDate={setDate}
+                styles={styles}
+              />
             )}
+          </View>
+        </View>
+        <View>
+          <View
+            style={{
+              flexDirection: 'row',
+              marginTop: 40,
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              width: '100%',
+            }}>
+            <TouchableOpacity style={styles.monthYearContainer}>
+              <Text>c</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.monthYearContainer}>
+              <Text>do</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>
 
+      {/* Day WEEKS  */}
       <View style={styles.weeklydate}>
         <ScrollView
           ref={ref}
@@ -370,10 +254,54 @@ const style = size =>
       marginLeft: 162 * size,
     },
     weeklydate: {
-      backgroundColor: 'red',
       flexDirection: 'row',
       height: 90 * size,
       marginRight: 15 * size,
       marginLeft: 16 * size,
+    },
+    monthYearContainer: {
+      width: 160 * size,
+      height: 60 * size,
+      backgroundColor: 'white',
+      borderRadius: 15 * size,
+
+      justifyContent: 'center',
+    },
+    monthYearText: {
+      fontFamily: 'gilroy-bold',
+      fontWeight: '600',
+      fontSize: 16 * size,
+      lineHeight: 20 * size,
+      color: '#253466',
+    },
+    datesBox: {
+      width: 343 * size,
+      height: 336 * size,
+      borderRadius: 20 * size,
+      backgroundColor: 'white',
+      alignItems: 'center',
+      paddingVertical: 26 * size,
+      paddingHorizontal: 31 * size,
+    },
+    selectDates: {
+      width: 118 * size,
+      height: 24 * size,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginBottom: 15 * size,
+    },
+    calendarItemsContainer: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      width: 300 * size,
+      height: 250 * size,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: 28 * size,
+    },
+    monthYearItems: {
+      width: '25%',
+      marginBottom: 42,
+      alignItems: 'center',
     },
   });

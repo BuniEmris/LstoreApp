@@ -19,9 +19,6 @@ const initState = {
   date: new Date(),
   listDate: createListDate(new Date()),
   size: (Number(Dimensions.get('window').width) * 0.2667) / 100,
-  prevMonth: getDateMonth(new Date(), 'prev'),
-  currentMonth: getDateMonth(new Date(), 'current'),
-  nextMonth: getDateMonth(new Date(), 'next'),
 };
 export const AddReducer = (state = initState, action) => {
   switch (action.type) {
@@ -37,12 +34,6 @@ export const AddReducer = (state = initState, action) => {
       return {...state, listDate: action.payload};
     case 'SET_DATE':
       return {...state, date: action.payload};
-    case 'SET_PREVMONTH':
-      return {...state, prevMonth: action.payload};
-    case 'SET_CURRENTMONTH':
-      return {...state, currentMonth: action.payload};
-    case 'SET_NEXTMONTH':
-      return {...state, nextMonth: action.payload};
 
     default:
       return {...state};
@@ -54,12 +45,6 @@ export const setFirsDatetAC = payload => ({type: 'set_First', payload});
 export const setLastDateAC = payload => ({type: 'SET_LAST_DATE', payload});
 export const setListDateAC = payload => ({type: 'SET_LIST_DATE', payload});
 export const setDateAC = payload => ({type: 'SET_DATE', payload});
-export const setPrevMonthAC = payload => ({type: 'SET_PREVMONTH', payload});
-export const setCurrentMonthAC = payload => ({
-  type: 'SET_CURRENTMONTH',
-  payload,
-});
-export const setNextMonthAC = payload => ({type: 'SET_NEXTMONTH', payload});
 
 export const getTotal = () => (dispatch, getState) => {
   const state = getState().add;
