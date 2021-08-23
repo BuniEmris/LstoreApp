@@ -129,11 +129,13 @@ const style = (size, shoykeyb) =>
     headerText: {
       fontSize: 25 * size,
       fontWeight: 'bold',
+      fontFamily: 'gilroy-bold',
     },
     buttonText: {
       color: 'white',
       fontSize: 18 * size,
-      fontWeight: 'bold',
+      fontWeight: '700',
+      fontFamily: 'gilroy-bold',
     },
     buttonContainer: {
       marginTop: 10 * size,

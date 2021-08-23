@@ -50,14 +50,17 @@ const style = size =>
     calendarText: {
       marginRight: 22 * size,
       fontSize: 12 * size,
+      fontFamily: 'gilroy-medium',
+      fontWeight: 'bold',
     },
     profitText: {
       color: 'rgb(37, 52, 102)',
       lineHeight: 25 * size,
       fontSize: 20 * size,
       marginLeft: 16 * size,
-      fontWeight: 'bold',
+      fontWeight: '600',
       marginTop: 25 * size,
+      fontFamily: 'gilroy-bold',
     },
     cardBox: {
       // marginLeft: 152 * size,

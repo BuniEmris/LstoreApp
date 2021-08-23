@@ -22,7 +22,7 @@ const History = () => {
       <Card />
       <Location />
       <View style={styles.bodyTextContainer}>
-        <Text style={styles.bodyText}>TODAY</Text>
+        <Text style={styles.bodyText}>Cегодня</Text>
         {/* <Text style={styles.bodyText}>789 000 uzs</Text> */}
       </View>
       <BodyList alladdress={alladdress} refRBSheet={refRBSheet} />
@@ -41,10 +41,12 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     marginTop: 20,
     marginLeft: 16,
+    textTransform: 'uppercase',
     marginRight: 16,
     color: 'rgba(37, 52, 102, 0.4)',
     fontSize: 14,
     fontWeight: '600',
+    fontFamily: 'gilroy-medium',
   },
   bodyTextContainer: {
     width: '100%',

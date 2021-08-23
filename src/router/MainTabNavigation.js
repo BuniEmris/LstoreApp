@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
   iconText: {
     fontSize: 11,
     fontWeight: 'bold',
+    fontFamily: 'gilroy-medium',
   },
 });
 

@@ -30,16 +30,18 @@ const Year = ({styles, setCalendarType, value, setDate}) => {
           </Text>
         </TouchableOpacity>
       ))}
-      <TouchableOpacity
-        onPress={() => setyearsData(getYears(yearsData[0] - 1))}>
-        <Text style={{color: '#87C289', fontSize: 20}}> {'<'} </Text>
-      </TouchableOpacity>
+      <View style={{flexDirection: 'row'}}>
+        <TouchableOpacity
+          onPress={() => setyearsData(getYears(yearsData[0] - 1))}>
+          <Text style={{color: '#87C289', fontSize: 30}}> {'<       '} </Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        disabled={yearsData[15] + 16 > date.getFullYear()}
-        onPress={() => setyearsData(getYears(yearsData[15] + 16))}>
-        <Text style={{color: '#87C289', fontSize: 20}}>{'>'} </Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          disabled={yearsData[15] + 16 > date.getFullYear()}
+          onPress={() => setyearsData(getYears(yearsData[15] + 16))}>
+          <Text style={{color: '#87C289', fontSize: 30}}>{'        >'} </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

@@ -14,7 +14,8 @@ const Cashbox = () => {
           style={{
             marginTop: 16,
             marginRight: 300,
-            fontWeight: 'bold',
+            fontWeight: '700',
+            fontFamily: 'gilroy-bold',
             fontSize: 25,
             color: '#2A3151',
           }}>

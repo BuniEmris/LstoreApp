@@ -107,6 +107,7 @@ const LinerChart = ({tooltipPos, setTooltipPos, updating}) => {
                       <TextSVG
                         x={tooltipPos.x + 20}
                         y={tooltipPos.y + 30}
+                        fontFamily="gilroy-bold"
                         fill="blue"
                         fontSize="16"
                         fontWeight="bold"
@@ -116,6 +117,7 @@ const LinerChart = ({tooltipPos, setTooltipPos, updating}) => {
                       <TextSVG
                         x={tooltipPos.x + 27}
                         y={tooltipPos.y + 50}
+                        fontFamily="gilroy-bold"
                         fill="black"
                         fontSize="16"
                         fontWeight="bold"

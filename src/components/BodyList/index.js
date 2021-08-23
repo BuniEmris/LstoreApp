@@ -50,8 +50,8 @@ const BodyList = ({refRBSheet, alladdress}) => {
                 <View style={styles.textContainer}>
                   <Text
                     style={{
-                      fontFamily: 'Gilroy-ExtraBold',
-                      fontWeight: 'bold',
+                      fontFamily: 'gilroy-bold',
+                      fontWeight: '600',
                       fontSize: 16,
                       marginBottom: 4,
                     }}>
@@ -63,7 +63,8 @@ const BodyList = ({refRBSheet, alladdress}) => {
                     style={{
                       textAlign: 'right',
                       marginBottom: 4,
-                      fontWeight: 'bold',
+                      fontWeight: '600',
+                      fontFamily: 'gilroy-bold',
                     }}>
                     {numberWithSpaces(Math.floor(item.Sum))} uzs
                   </Text>
@@ -96,8 +97,8 @@ const BodyList = ({refRBSheet, alladdress}) => {
                 <View style={styles.textContainer}>
                   <Text
                     style={{
-                      fontFamily: 'Gilroy-ExtraBold',
-                      fontWeight: 'bold',
+                      fontFamily: 'gilroy-medium',
+                      fontWeight: '600',
                       fontSize: 16,
                       marginBottom: 4,
                     }}>
@@ -109,7 +110,8 @@ const BodyList = ({refRBSheet, alladdress}) => {
                     style={{
                       textAlign: 'right',
                       marginBottom: 4,
-                      fontWeight: 'bold',
+                      fontWeight: '600',
+                      fontFamily: 'gilroy-medium',
                     }}>
                     {numberWithSpaces(Math.floor(item.Sum))} uzs
                   </Text>

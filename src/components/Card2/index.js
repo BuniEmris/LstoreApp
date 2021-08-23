@@ -1,41 +1,19 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
-import Calendar1 from '../Iconsvg/Calendar';
-import Modal from 'react-native-modal';
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
-import DatePicker from 'react-native-modern-datepicker';
-import {useDispatch, useSelector} from 'react-redux';
-import {
-  compareDate,
-  createListDate,
-  fixFormat,
-  getDateMonth,
-  getToday,
-} from '../../helpers/utils';
-import {
-  setCurrentMonthAC,
-  setDateAC,
-  setFirsDatetAC,
-  setLastDateAC,
-  setListDateAC,
-  setNextMonthAC,
-  setPrevMonthAC,
-} from '../../store/reducers/addReducer';
-import moment from 'moment';
-import {useCallback} from 'react';
-import ModalDP from './ModalDP';
-import Days from './CalendarComponents/Days';
-import Month from './CalendarComponents/Month';
-import Year from './CalendarComponents/Year';
-// returns today's date.. e.g: 2019/10/12
-//Get formatted date from Date object or date string "2019/..."
 
+import {useDispatch, useSelector} from 'react-redux';
+import {compareDate, createListDate, getToday} from '../../helpers/utils';
+import {setDateAC, setListDateAC} from '../../store/reducers/addReducer';
+
+import WeekDays from './WeekDays/index';
+import Calendar from './CalendarComponents/Calendar';
+import HeaderText from './HeaderText';
 const Card2 = ({warehouse1 = false, value}) => {
-  const ref = useRef();
   const calendar = useSelector(state => state.add);
   const dispatch = useDispatch();
+
   const [date, setDate] = useState(value || new Date());
+
   const [isModalVisible, setModalVisible] = useState(false);
 
   const [calendarType, setCalendarType] = useState('date');
@@ -51,145 +29,33 @@ const Card2 = ({warehouse1 = false, value}) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.textContainer}>
-        <View style={styles.textHeader}>
-          {warehouse1 ? (
-            <Text style={styles.text}>Склады </Text>
-          ) : (
-            <Text style={styles.text}>История </Text>
-          )}
-        </View>
+      {/* HEADER TEXT  */}
+      <HeaderText
+        setModalVisible={setModalVisible}
+        warehouse1={warehouse1}
+        calendar={calendar}
+        styles={styles}
+      />
+      {/* CALENDAR COMPONENT  */}
+      <Calendar
+        setCalendarType={setCalendarType}
+        calendarType={calendarType}
+        styles={styles}
+        date={date}
+        setDate={setDate}
+        calendar={calendar}
+        isModalVisible={isModalVisible}
+        setModalVisible={setModalVisible}
+      />
 
-        <View style={styles.calendarText}>
-          <TouchableOpacity
-            onPress={() => setModalVisible(true)}
-            style={{marginTop: 10, flexDirection: 'row'}}>
-            <Text style={{color: 'rgba(255, 255, 255, 0.5)', marginRight: 15}}>
-              {moment(calendar.date).locale('ru').format('LL')}
-            </Text>
-            <Calendar1 />
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      <Modal
-        animationType="slide"
-        style={{justifyContent: 'center', alignItems: 'center', flex: 1}}
-        isVisible={isModalVisible}
-        onBackdropPress={() => setModalVisible(false)}>
-        <View
-          style={{
-            flexDirection: 'row',
-            marginBottom: 40,
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            width: '100%',
-          }}>
-          <TouchableOpacity
-            onPress={() => setCalendarType('month')}
-            style={{...styles.monthYearContainer, alignItems: 'center'}}>
-            <Text style={styles.monthYearText}>Месяц</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={{...styles.monthYearContainer, alignItems: 'center'}}
-            onPress={() => setCalendarType('year')}>
-            <Text style={styles.monthYearText}>Год</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.datesBox}>
-          <View
-            style={{
-              width: 280,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            {calendarType === 'date' ? (
-              <Days
-                setCalendarType={setCalendarType}
-                date={date}
-                setDate={setDate}
-                styles={styles}
-              />
-            ) : calendarType === 'month' ? (
-              <Month
-                setCalendarType={setCalendarType}
-                date={date}
-                setDate={setDate}
-                calendar={calendar}
-                styles={styles}
-              />
-            ) : (
-              <Year
-                setCalendarType={setCalendarType}
-                value={date}
-                setDate={setDate}
-                styles={styles}
-              />
-            )}
-          </View>
-        </View>
-        <View>
-          <View
-            style={{
-              flexDirection: 'row',
-              marginTop: 40,
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              width: '100%',
-            }}>
-            <TouchableOpacity style={styles.monthYearContainer}>
-              <Text>c</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.monthYearContainer}>
-              <Text>do</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
-
-      {/* Day WEEKS  */}
-      <View style={styles.weeklydate}>
-        <ScrollView
-          ref={ref}
-          onContentSizeChange={() =>
-            ref && ref.current.scrollToEnd({animated: false})
-          }
-          horizontal>
-          {calendar.listDate.map((item, index) => {
-            return (
-              <TouchableOpacity
-                key={index + '/' + calendar.date.getDate}
-                onPress={() => dispatch(setDateAC(item))}
-                style={{
-                  ...styles.daysButton,
-                  backgroundColor: compareDate(item, calendar.date)
-                    ? '#5264F0'
-                    : '#41486A',
-                }}>
-                <Text
-                  style={{
-                    color: 'rgba(255, 255, 255, 0.5)',
-                    marginTop: 5,
-                    fontSize: 12,
-                    fontWeight: '500',
-                  }}>
-                  {getToday(item.getDay())}
-                </Text>
-                <Text
-                  style={{
-                    marginTop: 5,
-                    color: 'white',
-                    fontSize: 14,
-                    fontWeight: '600',
-                  }}>
-                  {item.getDate()}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
-        </ScrollView>
-      </View>
+      {/* Day WEEKS COMPONENT  */}
+      <WeekDays
+        styles={styles}
+        dispatch={dispatch}
+        setDateAC={setDateAC}
+        calendar={calendar}
+        getToday={getToday}
+      />
     </View>
   );
 };
@@ -214,13 +80,15 @@ const style = size =>
       width: 130 * size,
     },
     text: {
+      fontFamily: 'gilroy-medium',
       fontWeight: '600',
       lineHeight: 37 * size,
-      fontSize: 30 * size,
+      fontSize: 25 * size,
       color: 'white',
     },
     calendarText: {
-      fontWeight: 'bold',
+      fontFamily: 'gilroy-medium',
+      fontWeight: '600',
       fontSize: 20,
     },
     daysButton: {
@@ -264,8 +132,10 @@ const style = size =>
       height: 60 * size,
       backgroundColor: 'white',
       borderRadius: 15 * size,
-
+      flexDirection: 'row',
+      alignItems: 'center',
       justifyContent: 'center',
+      padding: 10 * size,
     },
     monthYearText: {
       fontFamily: 'gilroy-bold',
@@ -297,11 +167,24 @@ const style = size =>
       height: 250 * size,
       justifyContent: 'center',
       alignItems: 'center',
-      marginTop: 28 * size,
+      marginTop: 10 * size,
     },
     monthYearItems: {
       width: '25%',
-      marginBottom: 42,
+      marginBottom: 40 * size,
       alignItems: 'center',
+    },
+    fromToText: {
+      fontSize: 16 * size,
+      fontFamily: 'gilroy-medium',
+      fontWeight: '600',
+      color: 'rgba(37, 52, 102, 0.5)',
+    },
+    fromTextView: {
+      marginHorizontal: 12 * size,
+      width: 2 * size,
+      height: 28 * size,
+      borderRadius: 2 * size,
+      backgroundColor: 'rgba(37, 52, 102, 0.2)',
     },
   });

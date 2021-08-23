@@ -66,8 +66,8 @@ const BodyList2 = ({
                       <View style={styles.textContainerCash}>
                         <Text
                           style={{
-                            fontFamily: 'Gilroy-ExtraBold',
-                            fontWeight: 'bold',
+                            fontFamily: 'gilroy-bold',
+                            fontWeight: '600',
                             fontSize: 16,
                             marginBottom: 4,
                             color: 'rgb(37, 52, 102)',
@@ -79,7 +79,8 @@ const BodyList2 = ({
                         <Text
                           style={{
                             fontSize: 16,
-                            fontWeight: 'bold',
+                            fontFamily: 'gilroy-bold',
+                            fontWeight: '600',
                             color: 'rgb(37, 52, 102)',
                             textAlign: 'right',
                             marginBottom: 4,
@@ -193,7 +194,7 @@ const BodyList2 = ({
             </ScrollView>
           ) : (
             <View>
-              <Text>there is no item in Storage</Text>
+              <Text>нет товара</Text>
             </View>
           )}
         </View>

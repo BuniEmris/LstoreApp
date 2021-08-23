@@ -34,13 +34,13 @@ const Month = ({styles, date, setDate, setCalendarType}) => {
               setDateByKey(currentDate, currentDate.getFullYear() - 1, 'year'),
             );
           }}>
-          <Text style={{color: '#87C289', fontSize: 20}}> {'<'} </Text>
+          <Text style={{color: '#87C289', fontSize: 25}}> {'<'} </Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
             setCurrentDate(setCalendarType('year'));
           }}>
-          <Text style={styles.calendarText}>
+          <Text style={{...styles.calendarText, marginTop: 5}}>
             {getMonthName(currentDate, 'year')}
           </Text>
         </TouchableOpacity>
@@ -51,7 +51,7 @@ const Month = ({styles, date, setDate, setCalendarType}) => {
               setDateByKey(currentDate, currentDate.getFullYear() + 1, 'year'),
             );
           }}>
-          <Text style={{color: '#87C289', fontSize: 20}}>{'>'} </Text>
+          <Text style={{color: '#87C289', fontSize: 25}}>{'>'} </Text>
         </TouchableOpacity>
       </View>
       <View style={styles.calendarItemsContainer}>

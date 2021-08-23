@@ -77,6 +77,7 @@ const StoreLocation = ({setAlladdress}) => {
               <Text
                 style={{
                   fontSize: 13,
+                  fontFamily: 'gilroy-medium',
                   fontWeight:
                     changeColor === item.UIDWarehouse ? 'bold' : '600',
                   color:

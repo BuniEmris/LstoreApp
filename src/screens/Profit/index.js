@@ -88,7 +88,8 @@ const style = size =>
       marginTop: 30 * size,
       color: '#4EC770',
       fontSize: 16 * size,
-      fontWeight: 'bold',
+      fontWeight: '600',
+      fontFamily: 'gilroy-bold',
       marginLeft: 16 * size,
     },
   });

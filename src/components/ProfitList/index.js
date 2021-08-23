@@ -28,7 +28,10 @@ const ProfitList = () => {
               justifyContent: 'space-between',
             }}>
             <Text style={styles.listText}>{item.Name}</Text>
-            <Text>{numberWithSpaces(item.Sum)} UZS</Text>
+            <Text style={styles.listText}>
+              {numberWithSpaces(Math.floor(item.Sum))}{' '}
+              <Text style={{color: '#9195AA', fontSize: 16}}>UZS</Text>
+            </Text>
           </View>
         </View>
       ))}
@@ -57,8 +60,8 @@ const style = size =>
       borderRadius: 10 * size,
     },
     listText: {
-      fontFamily: 'Gilroy-ExtraBold',
-      fontWeight: '800',
+      fontFamily: 'gilroy-medium',
+      fontWeight: '600',
       fontSize: 16 * size,
       width: 120 * size,
       marginLeft: 12.5 * size,

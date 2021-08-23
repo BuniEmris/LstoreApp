@@ -19,8 +19,8 @@ const InOut = ({minus = false}) => {
         <Text style={styles.statusText}>{minus ? 'Расход' : 'Прибыль'}</Text>
         <Text style={styles.statusNumber}>
           {minus
-            ? numberWithSpaces(data.expense)
-            : numberWithSpaces(data.profit)}
+            ? numberWithSpaces(Math.floor(data.expense))
+            : numberWithSpaces(Math.floor(data.profit))}
         </Text>
       </View>
       <View style={styles.iconContain}>
@@ -53,6 +53,8 @@ const style = size =>
       width: 125 * size,
     },
     statusText: {
+      fontFamily: 'gilroy-medium',
+      fontWeight: '600',
       fontSize: 10 * size,
       fontWeight: '500',
       marginLeft: 14 * size,
@@ -60,6 +62,7 @@ const style = size =>
       color: 'rgba(255, 255, 255, 0.5)',
     },
     statusNumber: {
+      fontFamily: 'gilroy-medium',
       fontSize: 12 * size,
       fontWeight: '600',
       marginLeft: 14 * size,

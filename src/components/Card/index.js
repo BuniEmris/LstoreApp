@@ -41,10 +41,10 @@ const style = size =>
       height: 37 * size,
       marginLeft: 16 * size,
       marginTop: 58 * size,
-      fontFamily: 'Gilroy-Medium',
+      fontFamily: 'gilroy-bold',
     },
     text: {
-      fontFamily: 'Gilroy-Medium',
+      fontFamily: 'gilroy-bold',
       fontWeight: '600',
       lineHeight: 37,
       fontSize: 30,
@@ -59,8 +59,9 @@ const style = size =>
       borderColor: 'white',
     },
     balance: {
+      fontFamily: 'gilroy-medium',
       marginTop: 6 * size,
-      width: 95 * size,
+
       height: 18 * size,
       marginLeft: 17 * size,
       fontSize: 15 * size,
