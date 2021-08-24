@@ -14,7 +14,7 @@ const initState = {
   isauth: false,
   login: '',
   total: 0,
-  first: getPrevMonth(),
+  first: new Date(),
   last: new Date(),
   date: new Date(),
   listDate: createListDate(new Date()),
@@ -32,6 +32,8 @@ export const AddReducer = (state = initState, action) => {
       return {...state, last: action.payload};
     case 'SET_LIST_DATE':
       return {...state, listDate: action.payload};
+    case 'SET_ALL_DATE':
+      return {...state, first: action.payload, last: action.payload};
     case 'SET_DATE':
       return {...state, date: action.payload};
 
@@ -43,6 +45,7 @@ export const setTotalAC = total => ({type: 'setTotal', total});
 export const setLoginAC = login => ({type: 'SET_LOGIN', login});
 export const setFirsDatetAC = payload => ({type: 'set_First', payload});
 export const setLastDateAC = payload => ({type: 'SET_LAST_DATE', payload});
+export const setAllDateAC = payload => ({type: 'SET_ALL_DATE', payload});
 export const setListDateAC = payload => ({type: 'SET_LIST_DATE', payload});
 export const setDateAC = payload => ({type: 'SET_DATE', payload});
 

@@ -1,4 +1,5 @@
 import React, {useMemo, useState} from 'react';
+import {useEffect} from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 import {
   compareDateByKeys,
@@ -7,7 +8,16 @@ import {
   parseDate,
   setDateByKey,
 } from '../../../helpers/utils';
+import {useSelector, useDispatch} from 'react-redux';
+
+import {
+  getListHistory,
+  getListHistoryAll,
+} from '../../../store/reducers/warehouseListReducer';
 const Days = ({styles, date, setDate, setCalendarType}) => {
+  const {first, last} = useSelector(state => state.add);
+  const {warehouseID} = useSelector(state => state.warehouseL);
+  const dispatch = useDispatch();
   const [prevMonth, setPrevMonth] = useState(getDateMonth(date, 'prev'));
   const [currentMonth, setCurrentMonth] = useState(
     getDateMonth(date, 'current'),
@@ -19,8 +29,13 @@ const Days = ({styles, date, setDate, setCalendarType}) => {
     setNextMonth(getDateMonth(date, 'next'));
   };
   const weekdays = [' ВС ', ' ПН ', ' ВТ ', ' СР ', ' ЧТ ', ' ПТ ', ' СБ '];
-  const [changeColor, setChangeColor] = useState(false);
-
+  useEffect(() => {
+    if (warehouseID) {
+      dispatch(getListHistory(warehouseID));
+    } else {
+      dispatch(getListHistoryAll());
+    }
+  }, [first, last, warehouseID]);
   const parseDateMemo = useMemo(() => parseDate(date), [date]);
   const isEqual = useMemo(
     () => compareDateByKeys(date, currentMonth?.date, 'year month'),
@@ -70,13 +85,7 @@ const Days = ({styles, date, setDate, setCalendarType}) => {
           ))}
         </View>
 
-        <View
-          style={{
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            width: 300,
-            marginTop: 22,
-          }}>
+        <View style={styles.daysWrapContainer}>
           {prevMonth.list.map((item, index) => (
             <TouchableOpacity
               key={index}
@@ -142,4 +151,4 @@ const Days = ({styles, date, setDate, setCalendarType}) => {
   );
 };
 
-export default Days;
+export default React.memo(props => <Days {...props} />);

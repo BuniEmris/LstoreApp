@@ -46,4 +46,4 @@ const Year = ({styles, setCalendarType, value, setDate}) => {
   );
 };
 
-export default Year;
+export default React.memo(props => <Year {...props} />);

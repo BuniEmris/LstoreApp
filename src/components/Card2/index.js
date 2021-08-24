@@ -3,20 +3,21 @@ import {View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
 
 import {useDispatch, useSelector} from 'react-redux';
 import {compareDate, createListDate, getToday} from '../../helpers/utils';
-import {setDateAC, setListDateAC} from '../../store/reducers/addReducer';
-
+import {
+  setDateAC,
+  setListDateAC,
+  setFirsDatetAC,
+  setLastDateAC,
+} from '../../store/reducers/addReducer';
+import Modal from 'react-native-modal';
 import WeekDays from './WeekDays/index';
 import Calendar from './CalendarComponents/Calendar';
 import HeaderText from './HeaderText';
 const Card2 = ({warehouse1 = false, value}) => {
   const calendar = useSelector(state => state.add);
   const dispatch = useDispatch();
-
-  const [date, setDate] = useState(value || new Date());
-
+  const {first, date, last} = useSelector(state => state.add);
   const [isModalVisible, setModalVisible] = useState(false);
-
-  const [calendarType, setCalendarType] = useState('date');
 
   const data = useSelector(state => state.add);
   const styles = style(data.size);
@@ -37,16 +38,30 @@ const Card2 = ({warehouse1 = false, value}) => {
         styles={styles}
       />
       {/* CALENDAR COMPONENT  */}
-      <Calendar
-        setCalendarType={setCalendarType}
-        calendarType={calendarType}
-        styles={styles}
-        date={date}
-        setDate={setDate}
-        calendar={calendar}
-        isModalVisible={isModalVisible}
-        setModalVisible={setModalVisible}
-      />
+      <Modal
+        animationType="slide"
+        style={{justifyContent: 'center', alignItems: 'center', flex: 1}}
+        isVisible={isModalVisible}
+        onBackdropPress={() => setModalVisible(false)}>
+        <Calendar
+          value={date}
+          endDate={last}
+          startDate={first}
+          onChange={(date, type) => {
+            switch (type) {
+              case 'start':
+                dispatch(setFirsDatetAC(date));
+                break;
+              case 'end':
+                dispatch(setLastDateAC(date));
+                break;
+
+              default:
+                dispatch(setDateAC(date));
+            }
+          }}
+        />
+      </Modal>
 
       {/* Day WEEKS COMPONENT  */}
       <WeekDays

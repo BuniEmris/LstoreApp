@@ -94,4 +94,4 @@ const Month = ({styles, date, setDate, setCalendarType}) => {
   );
 };
 
-export default Month;
+export default React.memo(props => <Month {...props} />);

@@ -121,7 +121,7 @@ const BodyList = ({refRBSheet, alladdress}) => {
           ))
         ) : (
           <View>
-            <Text>there is no item in Storage</Text>
+            <Text>нет история </Text>
           </View>
         )}
       </ScrollView>
