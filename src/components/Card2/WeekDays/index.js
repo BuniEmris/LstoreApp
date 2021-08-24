@@ -1,6 +1,10 @@
 import React, {useRef} from 'react';
 import {ScrollView, View, TouchableOpacity, Text} from 'react-native';
 import {compareDate} from '../../../helpers/utils';
+import {
+  setFirsDatetAC,
+  setLastDateAC,
+} from '../../../store/reducers/addReducer';
 const WeekDays = ({dispatch, styles, setDateAC, calendar, getToday}) => {
   const ref = useRef();
   return (
@@ -15,7 +19,11 @@ const WeekDays = ({dispatch, styles, setDateAC, calendar, getToday}) => {
           return (
             <TouchableOpacity
               key={index + '/' + calendar.date.getDate}
-              onPress={() => dispatch(setDateAC(item))}
+              onPress={() => {
+                dispatch(setDateAC(item));
+                dispatch(setFirsDatetAC(item));
+                dispatch(setLastDateAC(item));
+              }}
               style={{
                 ...styles.daysButton,
                 backgroundColor: compareDate(item, calendar.date)

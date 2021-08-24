@@ -235,12 +235,7 @@ const style = size =>
       flexDirection: 'row',
       alignItems: 'center',
     },
-    daysWrapContainer: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      width: 300 * size,
-      marginTop: 22 * size,
-    },
+
     eraseDate: {
       borderRadius: 50 * size,
       width: 50 * size,

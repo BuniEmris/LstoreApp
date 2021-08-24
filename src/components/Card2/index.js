@@ -13,6 +13,10 @@ import Modal from 'react-native-modal';
 import WeekDays from './WeekDays/index';
 import Calendar from './CalendarComponents/Calendar';
 import HeaderText from './HeaderText';
+import {
+  getListHistory,
+  getListHistoryAll,
+} from '../../store/reducers/warehouseListReducer';
 const Card2 = ({warehouse1 = false, value}) => {
   const calendar = useSelector(state => state.add);
   const dispatch = useDispatch();
@@ -58,6 +62,8 @@ const Card2 = ({warehouse1 = false, value}) => {
 
               default:
                 dispatch(setDateAC(date));
+                dispatch(setLastDateAC(date));
+                dispatch(setFirsDatetAC(date));
             }
           }}
         />

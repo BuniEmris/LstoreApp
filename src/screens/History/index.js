@@ -22,7 +22,7 @@ const History = () => {
       <Card />
       <Location />
       <View style={styles.bodyTextContainer}>
-        <Text style={styles.bodyText}>Cегодня</Text>
+        <Text style={styles.bodyText}>{''} </Text>
         {/* <Text style={styles.bodyText}>789 000 uzs</Text> */}
       </View>
       <BodyList alladdress={alladdress} refRBSheet={refRBSheet} />

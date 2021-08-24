@@ -14,7 +14,10 @@ import {
   getListHistory,
   getListHistoryAll,
 } from '../../store/reducers/warehouseListReducer';
+import {compareDate} from '../../helpers/utils';
 import Buy from '../Iconsvg/Buy';
+import moment from 'moment';
+
 const BodyList = ({refRBSheet, alladdress}) => {
   const historyList = useSelector(state => state.warehouseL);
   const dispatch = useDispatch();
@@ -22,9 +25,18 @@ const BodyList = ({refRBSheet, alladdress}) => {
   const styles = style(data.size);
   const historyListAll = useSelector(state => state.warehouseL);
   const loader = useSelector(state => state.warehouseL.loader2);
+  const {first, last} = useSelector(state => state.add);
   useEffect(() => {
     dispatch(getListHistoryAll());
-  });
+  }, []);
+
+  useEffect(() => {
+    if (historyList.warehouseID) {
+      dispatch(getListHistory(historyList.warehouseID));
+    } else {
+      dispatch(getListHistoryAll());
+    }
+  }, [first, last, historyList.warehouseID]);
 
   useEffect(() => {
     historyList.warehouseID &&
@@ -32,6 +44,12 @@ const BodyList = ({refRBSheet, alladdress}) => {
   }, [historyList.warehouseID]);
   return (
     <View style={styles.container}>
+      {/* <Text style={styles.bodyText}>
+        {compareDate(first, last)
+          ? moment(first).format('L')
+          : moment(first).format('L') + moment(last.format('L'))}
+        Cегодня
+      </Text> */}
       <ScrollView>
         {alladdress ? (
           historyListAll?.historyAll?.map((item, i) => (
@@ -97,7 +115,7 @@ const BodyList = ({refRBSheet, alladdress}) => {
                 <View style={styles.textContainer}>
                   <Text
                     style={{
-                      fontFamily: 'gilroy-medium',
+                      fontFamily: 'gilroy-bold',
                       fontWeight: '600',
                       fontSize: 16,
                       marginBottom: 4,
@@ -111,7 +129,7 @@ const BodyList = ({refRBSheet, alladdress}) => {
                       textAlign: 'right',
                       marginBottom: 4,
                       fontWeight: '600',
-                      fontFamily: 'gilroy-medium',
+                      fontFamily: 'gilroy-bold',
                     }}>
                     {numberWithSpaces(Math.floor(item.Sum))} uzs
                   </Text>

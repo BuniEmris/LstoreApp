@@ -16,7 +16,7 @@ import {
 } from '../../../store/reducers/warehouseListReducer';
 const Days = ({styles, date, setDate, setCalendarType}) => {
   const {first, last} = useSelector(state => state.add);
-  const {warehouseID} = useSelector(state => state.warehouseL);
+
   const dispatch = useDispatch();
   const [prevMonth, setPrevMonth] = useState(getDateMonth(date, 'prev'));
   const [currentMonth, setCurrentMonth] = useState(
@@ -29,13 +29,7 @@ const Days = ({styles, date, setDate, setCalendarType}) => {
     setNextMonth(getDateMonth(date, 'next'));
   };
   const weekdays = [' ВС ', ' ПН ', ' ВТ ', ' СР ', ' ЧТ ', ' ПТ ', ' СБ '];
-  useEffect(() => {
-    if (warehouseID) {
-      dispatch(getListHistory(warehouseID));
-    } else {
-      dispatch(getListHistoryAll());
-    }
-  }, [first, last, warehouseID]);
+
   const parseDateMemo = useMemo(() => parseDate(date), [date]);
   const isEqual = useMemo(
     () => compareDateByKeys(date, currentMonth?.date, 'year month'),
@@ -85,7 +79,13 @@ const Days = ({styles, date, setDate, setCalendarType}) => {
           ))}
         </View>
 
-        <View style={styles.daysWrapContainer}>
+        <View
+          style={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            width: 300,
+            marginTop: 22,
+          }}>
           {prevMonth.list.map((item, index) => (
             <TouchableOpacity
               key={index}

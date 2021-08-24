@@ -32,11 +32,19 @@ const BodyList2 = ({
   const state = useSelector(state => state.add);
   const styles = style(state.size);
   const loader = useSelector(state => state.warehouseL.loader4);
-
+  const {date} = useSelector(state => state.add);
   const balanceListAll = useSelector(state => state.warehouseL);
   useEffect(() => {
     dispatch(getListBalanceAll());
   });
+
+  useEffect(() => {
+    if (balanceList.warehouseID) {
+      dispatch(getListBalance(balanceList.warehouseID));
+    } else {
+      dispatch(getListBalanceAll());
+    }
+  }, [date, balanceList.warehouseID]);
 
   useEffect(() => {
     dispatch(getCashData());
@@ -135,7 +143,7 @@ const BodyList2 = ({
                       <Text
                         style={{
                           textAlign: 'right',
-                          fontFamily: 'Gilroy-ExtraBold',
+                          fontFamily: 'gilroy-bold',
                           fontWeight: 'bold',
                           fontSize: 12,
                           color: 'rgba(37, 52, 102, 0.5)',
@@ -259,7 +267,7 @@ const style = size =>
       elevation: 6,
     },
     nameStyles: {
-      fontFamily: 'Gilroy-ExtraBold',
+      fontFamily: 'gilroy-bold',
       fontWeight: 'bold',
       fontSize: 16 * size,
       marginBottom: 4 * size,
@@ -340,6 +348,7 @@ const style = size =>
       textAlign: 'right',
       marginBottom: 4 * size,
       fontWeight: 'bold',
+      fontFamily: 'gilroy-bold',
       color: '#253466',
     },
   });
